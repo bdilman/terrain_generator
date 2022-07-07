@@ -23,9 +23,6 @@ The wizard basically does the following:
 ### Installation
 Install the required files to run on your local system:
 
-- Cloning the repository
-
-      git clone https://github.com/Sarath18/terrain_generator
 
 - lxml
 
@@ -33,4 +30,4 @@ Install the required files to run on your local system:
 
 - urllib
 
-      sudo pip install urllib
+		pip install urllib3
