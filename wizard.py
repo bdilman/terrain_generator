@@ -7,15 +7,14 @@ from world_gen import *
 from subprocess import call
 import time
 import cv2
-from urllib import urlretrieve
-
+from urllib.request import urlretrieve
 class worldSettings(object):
     def __init__(self):
         self.ambient = "120 120 120 255"
         self.time = "10:00"
 
     def worldScene(self):
-        self.time = raw_input("Enter time of day[24 hrs](hh:mm): ")
+        self.time = input("Enter time of day[24 hrs](hh:mm): ")
         time = self.time[0:2]
         time = int(time)
 
@@ -80,7 +79,7 @@ if __name__ == "__main__":
 
     #Welcome text
     cwd = os.getcwd()
-    prin(cwd)
+    print(cwd)
     print("WELCOME TO AUTOMATIC TERRAIN GENEREATOR")
 
     #Choice Menu
@@ -90,16 +89,16 @@ if __name__ == "__main__":
         print("2. Insert Heightmap from URL")
         print("3. Use Earth's Terrain")
 
-        choice = int(raw_input("Enter a choice: "))
+        choice = int(input("Enter a choice: "))
 
         #Heightmpa on Disk
         if choice == 1:
-            path = raw_input("Enter the location of the heightmap:")
+            path = input("Enter the location of the heightmap:")
             check = True
 
         #Heightmap from URL
         elif choice == 2:
-            link = raw_input("Enter the url of heightmap:")
+            link = input("Enter the url of heightmap:")
             urlretrieve(link,"img.png")
             path = "./img.png"
             check = True
@@ -116,13 +115,13 @@ if __name__ == "__main__":
 
     '''
     #Ask user for heightmap input
-    check = raw_input("Do you have a heightmap?(y/n):")
+    check = input("Do you have a heightmap?(y/n):")
 
     #Take in heightmap as a url or as file on disk
     if check=="y" or check=="Y":
-        path = raw_input("Enter the location of the heightmap:")
+        path = input("Enter the location of the heightmap:")
     else:
-        link = raw_input("Enter the url of heightmap:")
+        link = input("Enter the url of heightmap:")
         urlretrieve(link,"img.png")
         path = "./img.png"
     '''
@@ -143,7 +142,7 @@ if __name__ == "__main__":
         os.system(command)
 
     #Changing the directory to the output path for the .world
-    destination = raw_input("World file destination(Press Enter to pass):")
+    destination = input("World file destination(Press Enter to pass):")
     if destination=="":
         destination=cwd
     os.chdir(destination)
