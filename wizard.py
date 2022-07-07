@@ -80,15 +80,15 @@ if __name__ == "__main__":
 
     #Welcome text
     cwd = os.getcwd()
-    print cwd
-    print "WELCOME TO AUTOMATIC TERRAIN GENEREATOR"
+    prin(cwd)
+    print("WELCOME TO AUTOMATIC TERRAIN GENEREATOR")
 
     #Choice Menu
     check = False
     while check == False:
-        print "1. Insert Heightmap from disk"
-        print "2. Insert Heightmap from URL"
-        print "3. Use Earth's Terrain"
+        print("1. Insert Heightmap from disk")
+        print("2. Insert Heightmap from URL")
+        print("3. Use Earth's Terrain")
 
         choice = int(raw_input("Enter a choice: "))
 
@@ -106,12 +106,12 @@ if __name__ == "__main__":
 
         #HeightMap of Earth's terrain
         elif choice == 3:
-            print "\nUnder Development, choose something else!\n"
+            prin("\nUnder Development, choose something else!\n")
             check = False
 
         #Default Case
         else:
-            print "\nPlase enter a valid choice.!\n"
+            print("\nPlase enter a valid choice.!\n")
             check = False
 
     '''
@@ -156,11 +156,11 @@ if __name__ == "__main__":
 
 
     #Success output
-    print "Terrain successully generated"
+    print("Terrain successully generated")
 
     #Opening the generated world in Gazebo
     time.sleep(1)
-    print "Loading World..."
+    print("Loading World...")
 
     call(["gazebo","terrain.world"])
 
