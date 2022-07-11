@@ -69,6 +69,7 @@ def modelFolderGenerator(heightmap):
 
 def imageResizer(path):
     hm = cv2.imread(path)
+    resize_im = 257
     hm_resize = cv2.resize(hm,(129,129))
 
     return hm_resize

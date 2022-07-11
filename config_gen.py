@@ -16,10 +16,10 @@ def configGenerator():
     author = ET.SubElement(model,"author")
 
     name = ET.SubElement(author,"name")
-    name.text = "Sarathkrishnan Ramesh"
+    name.text = "Jedsy - 2022"
 
     email = ET.SubElement(author,"email")
-    email.text = "---"
+    email.text = "www.jedsy.com"
 
     description = ET.SubElement(model,"description")
     description.text = "Auto Generated Terrain for Gazebo"
