@@ -96,7 +96,31 @@ def imageResizer(path):
         from osgeo import gdal
         dataset = gdal.Open(path, gdal.GA_ReadOnly)
 
-        dataset_info = gdal.Info(path)
+        ## print dataset info:
+        print("Driver: {}/{}".format(dataset.GetDriver().ShortName,
+                                dataset.GetDriver().LongName))
+        print("Size is {} x {} x {}".format(dataset.RasterXSize,
+                                        dataset.RasterYSize,
+                                        dataset.RasterCount))
+        print("Projection is {}".format(dataset.GetProjection()))
+        geotransform = dataset.GetGeoTransform()
+        if geotransform:
+           print("Origin = ({}, {})".format(geotransform[0], geotransform[3]))
+           print("Pixel Size = ({}, {})".format(geotransform[1], geotransform[5]))
+          
+            
+        band = dataset.GetRasterBand(1)
+        print("Band Type={}".format(gdal.GetDataTypeName(band.DataType)))
+        
+        min = band.GetMinimum()
+        max = band.GetMaximum()
+        if not min or not max:
+            (min,max) = band.ComputeRasterMinMax(True)
+        print("Min Elevation ={:.3f}, Max Elevation ={:.3f}".format(min,max))
+        
+        ## below requires string data to be reparsed..            
+        # dataset_info = gdal.Info(path)
+        
         aaba = 1 
 
     
