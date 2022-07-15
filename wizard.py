@@ -78,19 +78,27 @@ def imageResizer(path):
 
     if path.find('.hgt') != -1:
 
+    
+        #### B_option 1: retrieve .hgt as data array, works pretty fine
+        # siz = os.path.getsize(path)
+        # dim = int(math.sqrt(siz/2))
+    
+        # assert dim*dim*2 == siz, 'Invalid file size'
+    
+        # data = np.fromfile(path, np.dtype('>i2'), dim*dim).reshape((dim, dim))
+        
+        ## B_resize to desired size
+        #### B_todo: try original size by getting geolocation and size of the image
+        
+        # hm_resize = cv2.resize(data,(129,129))
 
-        fn = path
-    
-        siz = os.path.getsize(fn)
-        dim = int(math.sqrt(siz/2))
-    
-        assert dim*dim*2 == siz, 'Invalid file size'
-    
-        data = np.fromfile(fn, np.dtype('>i2'), dim*dim).reshape((dim, dim))
+        #### B_option 2: open with gdal and retrieve geoinfo 
+        from osgeo import gdal
+        dataset = gdal.Open(path, gdal.GA_ReadOnly)
 
-        aba = 1
-        ### try replacing hm directly with hm or change data to tiff maybe?
-        hm_resize = cv2.resize(data,(129,129))
+        dataset_info = gdal.Info(path)
+        aaba = 1 
+
     
     elif path.find('-') != -1:
         path = path[:-1]
