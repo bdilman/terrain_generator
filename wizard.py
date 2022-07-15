@@ -1,5 +1,6 @@
 #!usr/bin/env python
 import os
+import sys
 import shutil
 from config_gen import *
 from model_gen import *
@@ -8,6 +9,9 @@ from subprocess import call
 import time
 import cv2
 from urllib.request import urlretrieve
+import math
+import numpy as np 
+
 class worldSettings(object):
     def __init__(self):
         self.ambient = "120 120 120 255"
@@ -68,9 +72,35 @@ def modelFolderGenerator(heightmap):
 
 
 def imageResizer(path):
-    hm = cv2.imread(path)
-    resize_im = 257
-    hm_resize = cv2.resize(hm,(129,129))
+
+
+    # print("___imageResizer___ extracting data from : ", path)
+
+    if path.find('.hgt') != -1:
+
+
+        fn = path
+    
+        siz = os.path.getsize(fn)
+        dim = int(math.sqrt(siz/2))
+    
+        assert dim*dim*2 == siz, 'Invalid file size'
+    
+        data = np.fromfile(fn, np.dtype('>i2'), dim*dim).reshape((dim, dim))
+
+        aba = 1
+        ### try replacing hm directly with hm or change data to tiff maybe?
+        hm_resize = cv2.resize(data,(129,129))
+    
+    elif path.find('-') != -1:
+        path = path[:-1]
+        print("___imageResizer___ extracting data from : ", path)
+
+    else:   
+        hm = cv2.imread(path)
+        resize_im = 257
+        # return error if hm is None
+        hm_resize = cv2.resize(hm,(129,129))
 
     return hm_resize
 
@@ -86,15 +116,17 @@ if __name__ == "__main__":
     #Choice Menu
     check = False
     while check == False:
+        #### ui inputs
         print("1. Insert Heightmap from disk")
         print("2. Insert Heightmap from URL")
         print("3. Use Earth's Terrain")
 
         choice = int(input("Enter a choice: "))
 
-        #Heightmpa on Disk
+        #Heightmap on Disk
         if choice == 1:
             path = input("Enter the location of the heightmap:")
+            filename = input("Enter tile name, skip with '-'")
             check = True
 
         #Heightmap from URL
@@ -126,8 +158,15 @@ if __name__ == "__main__":
         urlretrieve(link,"img.png")
         path = "./img.png"
     '''
-
+    
+    #### B_todo: get & set more options, including, bbox, pixel_resize, etc.
     #Resizing the image to 2*n+1 dimention: (129x129)
+    
+    ## B retrieve path from filename if given
+    if filename is not None or filename !='-' or filename !='abort' :
+        path = path + filename
+        print("loading heightmap")
+
     heightmap = imageResizer(path)
 
     #Creating a autogen_terrain folder with terrain information and also the world file
